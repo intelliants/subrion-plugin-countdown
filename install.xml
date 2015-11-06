@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<plugin name="countdown">
+	<title>Countdown</title>
+	<summary>Front page with countdown timer till a specific date</summary>
+	<author>Intelliants LLC</author>
+	<contributor>Intelliants LLC</contributor>
+	<version>3.3.0</version>
+	<date>2015-06-24</date>
+	<compatibility>3.3</compatibility>
+
+	<configgroup name="countdown">Countdown</configgroup>
+
+	<config group="countdown" name="countdown_divider" type="divider">General</config>
+	<config group="countdown" name="countdown_enabled" type="radio" values="1,0" description="Enable">0</config>
+	<config group="countdown" name="countdown_page_title" type="text" description="Page title">Launching very soon!</config>
+	<config group="countdown" name="countdown_page_description" type="textarea" description="Page description">We will be ready really soon! Have a nice day!</config>
+	<config group="countdown" name="countdown_start_date" type="text" description="Date start"><![CDATA[]]></config>
+	<config group="countdown" name="countdown_end_date" type="text" description="Date end"><![CDATA[]]></config>
+
+	<pages>
+		<page name="countdown" url="countdown/">Countdown</page>
+	</pages>
+
+	<phrases>
+		<phrase category="common" key="countdown_enabled_admin">Your site visitors might see a different home page as you have countdown time plugin enabled.</phrase>
+	</phrases>
+
+	<hooks>
+		<hook name="phpCoreBeforePageDefine" type="php" page_type="front">
+			<![CDATA[
+if (iaView::REQUEST_HTML == $iaView->getRequestType() && $iaCore->get('countdown_enabled'))
+{
+	if (iaUsers::hasIdentity() && iaUsers::MEMBERSHIP_ADMINISTRATOR == iaUsers::getIdentity()->usergroup_id)
+	{
+		// set default homepage
+		$iaCore->set('home_page', 'index');
+		if ('countdown' == $iaView->name())
+		{
+			$iaView->name('index');
+		}
+
+		// notify
+		$iaView->setMessages(iaLanguage::get('countdown_enabled_admin'), iaView::SYSTEM);
+	}
+}
+			]]>
+		</hook>
+		<hook name="smartyAdminAfterHeadSection" pages="configuration" page_type="admin" type="smarty">
+			<![CDATA[
+{ia_add_media files='datepicker'}
+{ia_add_js}
+$(function()
+{
+	$('#countdown_start_date, #countdown_end_date')
+		.addClass('js-datepicker')
+		.prop('readonly', true)
+		.wrap('<div class="input-group"></div>')
+		.parent()
+		.append('<span class="input-group-addon js-datepicker-toggle"><i class="i-calendar"></i></span>');
+
+	$('.js-datepicker').datepicker({
+		showTime: true,
+		format: 'yyyy-mm-dd H:i:s',
+		language: intelli.config.lang
+	});
+
+	$('.js-datepicker-toggle').on('click', function(e)
+	{
+		e.preventDefault();
+
+		$(this).prev().datepicker('show');
+	});
+});
+{/ia_add_js}
+			]]>
+		</hook>
+		<hook name="phpConfigurationChange" pages="configuration" page_type="admin">
+			<![CDATA[
+if (iaView::REQUEST_HTML == $iaView->getRequestType() && isset($_POST['param']['countdown_enabled']))
+{
+	if ($_POST['param']['countdown_enabled'])
+	{
+		$iaCore->set('home_page', 'countdown', true);
+	}
+	else
+	{
+		$iaCore->set('home_page', 'index', true);
+	}
+}
+			]]>
+		</hook>
+	</hooks>
+</plugin>
