@@ -4,9 +4,9 @@
 	<summary>Front page with countdown timer till a specific date</summary>
 	<author>Intelliants LLC</author>
 	<contributor>Intelliants LLC</contributor>
-	<version>3.3.0</version>
-	<date>2015-06-24</date>
-	<compatibility>3.3</compatibility>
+	<version>4.0.0</version>
+	<date>2015-01-05</date>
+	<compatibility>4.0</compatibility>
 
 	<configgroup name="countdown">Countdown</configgroup>
 
@@ -76,9 +76,9 @@ $(function()
 		</hook>
 		<hook name="phpConfigurationChange" pages="configuration" page_type="admin">
 			<![CDATA[
-if (iaView::REQUEST_HTML == $iaView->getRequestType() && isset($_POST['param']['countdown_enabled']))
+if (iaView::REQUEST_HTML == $iaView->getRequestType() && isset($_POST['v']['countdown_enabled']))
 {
-	if ($_POST['param']['countdown_enabled'])
+	if ($_POST['v']['countdown_enabled'])
 	{
 		$iaCore->set('home_page', 'countdown', true);
 	}
