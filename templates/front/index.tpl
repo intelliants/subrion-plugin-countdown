@@ -19,7 +19,7 @@
 		<![endif]-->
 
 		<link href='//fonts.googleapis.com/css?family=Roboto+Condensed:400,700&subset=latin,cyrillic-ext' rel='stylesheet' type='text/css'>
-		<link href="{$core.page.nonProtocolUrl}plugins/countdown/templates/front/css/style.css" rel="stylesheet" type="text/css">
+		<link href="{$core.page.nonProtocolUrl}modules/countdown/templates/front/css/style.css" rel="stylesheet" type="text/css">
 	</head>
 	<body>
 		<div class="wrapper">
@@ -86,8 +86,8 @@
 		</div>
 
 		<script src="{$core.page.nonProtocolUrl}js/jquery/jquery.js"></script>
-		<script src="{$core.page.nonProtocolUrl}plugins/countdown/js/front/kinetic.js"></script>
-		<script src="{$core.page.nonProtocolUrl}plugins/countdown/js/front/jquery.final-countdown.min.js"></script>
+		<script src="{$core.page.nonProtocolUrl}modules/countdown/js/front/kinetic.js"></script>
+		<script src="{$core.page.nonProtocolUrl}modules/countdown/js/front/jquery.final-countdown.min.js"></script>
 
 		<script type="text/javascript">
 $(function()
