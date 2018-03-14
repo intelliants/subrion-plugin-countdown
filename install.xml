@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <module type="plugin" name="countdown">
-	<title>Countdown</title>
-	<summary>Front page with countdown timer till a specific date</summary>
-	<author>Intelliants LLC</author>
-	<contributor>Intelliants LLC</contributor>
-	<version>4.1.0</version>
-	<date>2017-03-13</date>
-	<compatibility>4.1</compatibility>
+    <title>Countdown</title>
+    <summary>Front page with countdown timer till a specific date</summary>
+    <author>Intelliants LLC</author>
+    <contributor>Intelliants LLC</contributor>
+    <version>4.2.0</version>
+    <date>2018-03-13</date>
+    <compatibility>4.2</compatibility>
 
-	<configgroup name="countdown">Countdown</configgroup>
+    <configgroup name="countdown">Countdown</configgroup>
 
-	<config group="countdown" name="countdown_divider" type="divider">General</config>
-	<config group="countdown" name="countdown_enabled" type="radio" values="1,0" description="Enable">0</config>
-	<config group="countdown" name="countdown_page_title" type="text" description="Page title">Launching very soon!</config>
-	<config group="countdown" name="countdown_page_description" type="textarea" description="Page description">We will be ready really soon! Have a nice day!</config>
-	<config group="countdown" name="countdown_start_date" type="text" description="Date start" multilingual="0"><![CDATA[]]></config>
-	<config group="countdown" name="countdown_end_date" type="text" description="Date end" multilingual="0"><![CDATA[]]></config>
+    <config group="countdown" name="countdown_divider" type="divider">General</config>
+    <config group="countdown" name="countdown_enabled" type="radio" values="1,0" description="Enable">0</config>
+    <config group="countdown" name="countdown_page_title" type="text" description="Page title">Launching very soon!</config>
+    <config group="countdown" name="countdown_page_description" type="textarea" description="Page description">We will be ready really soon! Have a nice day!</config>
+    <config group="countdown" name="countdown_start_date" type="text" description="Date start" multilingual="0"><![CDATA[]]></config>
+    <config group="countdown" name="countdown_end_date" type="text" description="Date end" multilingual="0"><![CDATA[]]></config>
 
-	<pages>
-		<page name="countdown" url="countdown/">Countdown</page>
-	</pages>
+    <pages>
+        <page name="countdown" url="countdown/">Countdown</page>
+    </pages>
 
-	<phrases>
-		<phrase category="common" key="countdown_enabled_admin">Your site visitors might see a different home page as you have countdown time plugin enabled.</phrase>
-	</phrases>
+    <phrases>
+        <phrase category="common" key="countdown_enabled_admin">Your site visitors might see a different home page as you have countdown time plugin enabled.</phrase>
+    </phrases>
 
-	<hooks>
-		<hook name="phpCoreBeforePageDefine" type="php" page_type="front">
-			<![CDATA[
+    <hooks>
+        <hook name="phpCoreBeforePageDefine" type="php" page_type="front">
+            <![CDATA[
 if (iaView::REQUEST_HTML == $iaView->getRequestType() && $iaCore->get('countdown_enabled'))
 {
 	if (iaUsers::hasIdentity() && iaUsers::MEMBERSHIP_ADMINISTRATOR == iaUsers::getIdentity()->usergroup_id)
@@ -44,9 +44,9 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType() && $iaCore->get('countdown
 	}
 }
 			]]>
-		</hook>
-		<hook name="smartyAdminAfterHeadSection" pages="configuration" page_type="admin" type="smarty">
-			<![CDATA[
+        </hook>
+        <hook name="smartyAdminAfterHeadSection" pages="configuration" page_type="admin" type="smarty">
+            <![CDATA[
 {ia_add_media files='moment, datepicker'}
 {ia_add_js}
 $(function()
@@ -82,9 +82,9 @@ $(function()
 });
 {/ia_add_js}
 			]]>
-		</hook>
-		<hook name="phpConfigurationChange" pages="configuration" page_type="admin">
-			<![CDATA[
+        </hook>
+        <hook name="phpConfigurationChange" pages="configuration" page_type="admin">
+            <![CDATA[
 if (iaView::REQUEST_HTML == $iaView->getRequestType() && isset($_POST['v']['countdown_enabled']))
 {
 	if ($_POST['v']['countdown_enabled'])
@@ -97,6 +97,6 @@ if (iaView::REQUEST_HTML == $iaView->getRequestType() && isset($_POST['v']['coun
 	}
 }
 			]]>
-		</hook>
-	</hooks>
+        </hook>
+    </hooks>
 </module>
