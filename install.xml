@@ -26,77 +26,8 @@
     </phrases>
 
     <hooks>
-        <hook name="phpCoreBeforePageDefine" type="php" page_type="front">
-            <![CDATA[
-if (iaView::REQUEST_HTML == $iaView->getRequestType() && $iaCore->get('countdown_enabled'))
-{
-	if (iaUsers::hasIdentity() && iaUsers::MEMBERSHIP_ADMINISTRATOR == iaUsers::getIdentity()->usergroup_id)
-	{
-		// set default homepage
-		$iaCore->set('home_page', 'index');
-		if ('countdown' == $iaView->name())
-		{
-			$iaView->name('index');
-		}
-
-		// notify
-		$iaView->setMessages(iaLanguage::get('countdown_enabled_admin'), iaView::SYSTEM);
-	}
-}
-			]]>
-        </hook>
-        <hook name="smartyAdminAfterHeadSection" pages="configuration" page_type="admin" type="smarty">
-            <![CDATA[
-{ia_add_media files='moment, datepicker'}
-{ia_add_js}
-$(function()
-{
-	$('input[name="v[countdown_start_date]"], input[name="v[countdown_end_date]"]')
-		.wrap('<div class="input-group"></div>')
-		.parent()
-		.append('<span class="input-group-addon js-countdate-toggle"><i class="i-calendar"></i></span>');
-
-	$('input[name="v[countdown_start_date]"], input[name="v[countdown_end_date]"]').datetimepicker(
-	{
-		format: 'YYYY-MM-DD HH:mm:ss',
-		locale: intelli.config.lang,
-		icons: {
-			time: 'i-clock',
-			date: 'i-calendar',
-			up: 'i-chevron-up',
-			down: 'i-chevron-down',
-			previous: 'i-chevron-left',
-			next: 'i-chevron-right',
-			today: 'i-checkmark',
-			clear: 'i-remove',
-			close: 'i-remove-sign'
-		}
-	});
-
-	$('body').on('click', '.js-countdate-toggle', function(e)
-	{
-		e.preventDefault();
-
-		$(this).prev().datetimepicker('show');
-	});
-});
-{/ia_add_js}
-			]]>
-        </hook>
-        <hook name="phpConfigurationChange" pages="configuration" page_type="admin">
-            <![CDATA[
-if (iaView::REQUEST_HTML == $iaView->getRequestType() && isset($_POST['v']['countdown_enabled']))
-{
-	if ($_POST['v']['countdown_enabled'])
-	{
-		$iaCore->set('home_page', 'countdown', true);
-	}
-	else
-	{
-		$iaCore->set('home_page', 'index', true);
-	}
-}
-			]]>
-        </hook>
+        <hook name="phpCoreBeforePageDefine" type="php" page_type="front" filename="hook.countdown_front.php"><![CDATA[]]></hook>
+        <hook name="smartyAdminAfterHeadSection" pages="configuration" page_type="admin" type="smarty" filename="hook.config_admin.tpl"><![CDATA[]]></hook>
+        <hook name="phpConfigurationChange" pages="configuration" page_type="admin" type="php" filename="hook.enable.php"><![CDATA[]]></hook>
     </hooks>
 </module>
