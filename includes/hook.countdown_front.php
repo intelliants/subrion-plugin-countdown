@@ -24,6 +24,7 @@
  *
  ******************************************************************************/
 
+
 if (iaView::REQUEST_HTML == $iaView->getRequestType() && $iaCore->get('countdown_enabled')) {
     if (iaUsers::hasIdentity() && iaUsers::MEMBERSHIP_ADMINISTRATOR == iaUsers::getIdentity()->usergroup_id) {
         // set default homepage
